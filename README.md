@@ -62,9 +62,24 @@ Create the following routes as efficiently as possible, using validation where a
 6. **Write a short answer in README.md**. In your `README.md`, write a short answer to the following questions:
 
    - Did you use the same type of route to update patient information as to update an employee's department?
+   - No, I used different types of routes for updating patient information and updating an employee's department. For updating a patient's information, I used a PUT request, which is more appropriate for replacing the entire resource. For updating a doctor’s department, I used PATCH, which is ideal for partial updates to the resource.
    - Why did you choose the selected strategy?
+   - I chose PATCH for routes that involve updating only specific fields (like doctor status and department) because PATCH allows partial updates without needing to send the entire resource. For patient updates, I used PUT because the route allows for updating multiple fields of the patient at once, and PUT is designed for resource replacement.
    - What are the advantages and disadvantages of the strategies you chose for creating these routes?
+   - Advantages:
+     Using PATCH for partial updates is more efficient since only the changed fields need to be sent in the request body.
+     PUT for full updates ensures that the entire resource is updated, preventing any unintended partial updates.
+     Disadvantages:
+     PATCH may require more careful handling of fields to ensure that only the intended fields are modified.
+     PUT might be less efficient for updating only a few fields because it requires sending and handling the entire resource.
    - What is the cost-benefit between using `PUT` and `PATCH`?
+   - Cost of PUT: Larger data payloads are transferred, even if only a few fields need to be updated, making it less efficient in terms of bandwidth.
+
+Benefit of PUT: It ensures the entire resource is replaced, which is useful when updating multiple fields and helps maintain consistency.
+
+Cost of PATCH: Handling partial updates requires extra logic to ensure data consistency and correct updates, which can increase complexity.
+
+Benefit of PATCH: More efficient for making small, targeted updates since only the affected fields are modified.
 
 <br>  
 

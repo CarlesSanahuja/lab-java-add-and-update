@@ -36,5 +36,20 @@ public class PatientService {
     public List<Patient> getPatientsWithDoctorStatus(Status status) {
         return patientRepository.findByAdmittedByStatus(status);
     }
+    public Patient createPatient(Patient Patient){
+        return patientRepository.save(Patient);
+    }
+    public Optional<Patient> updatePatientInfo(Long id, Patient updatedPatient) {
+        return patientRepository.findById(id).map(existingPatient -> {
+            // Actualiza todos los campos del paciente con los valores del objeto updatedPatient
+            existingPatient.setName(updatedPatient.getName());
+            existingPatient.setDateOfBirth(updatedPatient.getDateOfBirth());
+            existingPatient.setAdmittedBy(updatedPatient.getAdmittedBy());
+
+            // Guarda el paciente actualizado
+            return patientRepository.save(existingPatient);
+        });
+    }
+
 }
 

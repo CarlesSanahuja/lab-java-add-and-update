@@ -5,6 +5,7 @@ import com.hospital.enums.Status;
 import com.hospital.model.Patient;
 import com.hospital.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -47,5 +48,17 @@ public class PatientController {
     public List<Patient> getPatientsWithDoctorStatus(@PathVariable("status") Status status) {
         return patientService.getPatientsWithDoctorStatus(status);
     }
+
+    @PostMapping
+    public Patient createPatient(@RequestBody Patient patient){
+        return patientService.createPatient(patient);
+    }
+
+    @PutMapping("/patients/{id}")
+    public ResponseEntity<Patient> updatePatientInfo(@PathVariable Long id, @RequestBody Patient updatedPatient) {
+        Optional<Patient> updatedPatientOptional = patientService.updatePatientInfo(id, updatedPatient);
+        return updatedPatientOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }
 
